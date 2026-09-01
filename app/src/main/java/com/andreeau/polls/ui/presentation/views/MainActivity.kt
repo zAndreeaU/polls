@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             PollsAppTheme() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    innerPadding
+
 
                     Column(
                         modifier = Modifier

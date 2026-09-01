@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Polls</string>
+
+    //MenuScreen
+    <string name="create_poll">Create poll</string>
+    <string name="vote_poll">Vote</string>
+
+
+    //Accesibility
+    <string name="banner_voiceover">Screen banner</string>
 </resources>
