@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PollsApp">
         <activity
-            android:name="com.andreeau.polls.ui.views.SlashActivity"
+            android:name="com.andreeau.polls.ui.presentation.views.SlashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PollsApp"

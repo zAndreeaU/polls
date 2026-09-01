@@ -19,3 +19,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PollsApp"
 include(":app")
+include(":pollcore")

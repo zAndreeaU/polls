@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.views
+package com.andreeau.polls.ui.presentation.views
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
