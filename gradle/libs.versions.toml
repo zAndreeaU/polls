@@ -14,6 +14,9 @@ activityKtx = "1.10.1"
 
 composeBom = "2025.08.00"
 
+firebaseBom = "34.18.0"
+googleServices = "4.5.0"
+
 appcompat = "1.7.1"
 material = "1.13.0"
 
@@ -52,6 +55,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 compose-constraint-layout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintVersion" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
 
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -61,3 +67,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+firebase-google-services = {id = "com.google.gms.google-services", version.ref = "googleServices" }

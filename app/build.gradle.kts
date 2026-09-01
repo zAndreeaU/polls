@@ -6,14 +6,14 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
 }
 android {
-    namespace = "com.andreeau.pollscomponents"
+    namespace = "com.amethyst.polls"
     compileSdk = 37
 
 
     defaultConfig {
-        applicationId = "com.andreeau.pollscomponents"
+        applicationId = "com.amethyst.polls"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -67,6 +67,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
 
     // --- TEST DEPENDENCIES (FIXED) ---
