@@ -1,6 +1,7 @@
 package com.andreeau.polls.ui.presentation.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -51,17 +52,8 @@ fun PollCodeDialog(
             onDismiss()
         }
     ) {
-        Box(Modifier.fillMaxWidth()) {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(14.dp)),
-                painter = painterResource(R.drawable.dialog_background),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds
-            )
-
+        Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.background)) {
             IconButton(
                 onClick = { onDismiss() },
                 modifier = Modifier.align(Alignment.TopEnd)

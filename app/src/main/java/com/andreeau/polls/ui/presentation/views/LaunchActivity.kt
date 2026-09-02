@@ -8,7 +8,7 @@ import com.andreeau.polls.ui.presentation.navigation.PollsNavigation
 import com.andreeau.polls.ui.theme.PollsAppTheme
 
 
-class SlashActivity : ComponentActivity() {
+class LaunchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
