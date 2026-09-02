@@ -21,9 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.amethyst.polls.R
 import com.andreeau.polls.ui.theme.PollsAppTheme
 import com.andreeau.pollscomponents.components.buttons.LargeButton
 import com.andreeau.pollscomponents.components.buttons.RegularButton

@@ -1,6 +1,5 @@
 package com.andreeau.polls.ui.presentation.navigation
 
-
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -9,7 +8,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andreeau.polls.ui.presentation.views.CreatePollScreen
 import com.andreeau.polls.ui.presentation.views.MenuScreen
-import com.andreeau.polls.ui.presentation.views.PollCodeDialog
 import com.andreeau.polls.ui.presentation.views.ResultsScreen
 import com.andreeau.polls.ui.presentation.views.SplashScreen
 import com.andreeau.polls.ui.presentation.views.VotePollScreen
@@ -24,12 +22,18 @@ fun PollsNavigation() {
         startDestination = PollRoute.Splash.route
     ) {
 
-        // Splash Screen
+        // ---------------------------------------------------------
+        // Splash
+        // ---------------------------------------------------------
+
         composable(PollRoute.Splash.route) {
 
             SplashScreen(
                 onSplashFinished = {
-                    navController.navigate(PollRoute.Menu.route) {
+
+                    navController.navigate(
+                        PollRoute.Menu.route
+                    ) {
                         popUpTo(PollRoute.Splash.route) {
                             inclusive = true
                         }
@@ -38,26 +42,42 @@ fun PollsNavigation() {
             )
         }
 
+        // ---------------------------------------------------------
         // Main Menu
+        // ---------------------------------------------------------
+
         composable(PollRoute.Menu.route) {
 
             MenuScreen(
+
                 onCreatePoll = {
-                    navController.navigate(PollRoute.CreatePoll.route)
+
+                    navController.navigate(
+                        PollRoute.CreatePoll.route
+                    )
                 },
 
-                onVotePoll = {
-                    navController.navigate(PollRoute.VoteCode.route)
+                onVotePoll = { pollCode ->
+
+                    navController.navigate(
+                        "${PollRoute.VotePoll.route}/$pollCode"
+                    )
                 }
             )
         }
 
+        // ---------------------------------------------------------
         // Create Poll
+        // ---------------------------------------------------------
+
         composable(PollRoute.CreatePoll.route) {
 
             CreatePollScreen(
                 onPollCreated = {
-                    navController.navigate(PollRoute.CreateResults.route) {
+
+                    navController.navigate(
+                        PollRoute.CreateResults.route
+                    ) {
                         popUpTo(PollRoute.CreatePoll.route) {
                             inclusive = true
                         }
@@ -66,12 +86,18 @@ fun PollsNavigation() {
             )
         }
 
-        // Results after creating a poll
+        // ---------------------------------------------------------
+        // Results after creating poll
+        // ---------------------------------------------------------
+
         composable(PollRoute.CreateResults.route) {
 
             ResultsScreen(
                 onBackToMenu = {
-                    navController.navigate(PollRoute.Menu.route) {
+
+                    navController.navigate(
+                        PollRoute.Menu.route
+                    ) {
                         popUpTo(PollRoute.Menu.route) {
                             inclusive = true
                         }
@@ -80,29 +106,10 @@ fun PollsNavigation() {
             )
         }
 
-        // Poll Code Dialog
-        composable(PollRoute.VoteCode.route) {
-
-            PollCodeDialog(
-                onCodeEntered = { pollCode ->
-
-                    // Later you can validate the code here
-                    navController.navigate(
-                        "${PollRoute.VotePoll.route}/$pollCode"
-                    ) {
-                        popUpTo(PollRoute.VoteCode.route) {
-                            inclusive = true
-                        }
-                    }
-                },
-
-                onDismiss = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
+        // ---------------------------------------------------------
         // Vote Poll
+        // ---------------------------------------------------------
+
         composable(
             route = "${PollRoute.VotePoll.route}/{pollCode}",
             arguments = listOf(
@@ -119,6 +126,7 @@ fun PollsNavigation() {
                 pollCode = pollCode,
 
                 onVoteCompleted = {
+
                     navController.navigate(
                         PollRoute.VoteResults.route
                     ) {
@@ -130,5 +138,24 @@ fun PollsNavigation() {
             )
         }
 
+        // ---------------------------------------------------------
+        // Results after voting
+        // ---------------------------------------------------------
+
+        composable(PollRoute.VoteResults.route) {
+
+            ResultsScreen(
+                onBackToMenu = {
+
+                    navController.navigate(
+                        PollRoute.Menu.route
+                    ) {
+                        popUpTo(PollRoute.VoteResults.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
     }
 }

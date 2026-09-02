@@ -5,6 +5,14 @@
     <string name="create_poll">Create poll</string>
     <string name="vote_poll">Vote</string>
 
+    //EnterPollCodeScreen
+    <string name="enter_poll_code">Enter Code</string>
+    <string name="poll_code">Code</string>
+    <string name="dismiss_dialog">Dismiss</string>
+    <string name="next">Next</string>
+
+
+
 
     //Accesibility
     <string name="banner_voiceover">Screen banner</string>

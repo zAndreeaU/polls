@@ -1,5 +1,3 @@
-package com.andreeau.polls.ui.presentation.navigation
-
 sealed class PollRoute(val route: String) {
 
     data object Splash : PollRoute("splash")
@@ -9,8 +7,6 @@ sealed class PollRoute(val route: String) {
     data object CreatePoll : PollRoute("create_poll")
 
     data object CreateResults : PollRoute("create_results")
-
-    data object VoteCode : PollRoute("vote_code")
 
     data object VotePoll : PollRoute("vote_poll")
 
