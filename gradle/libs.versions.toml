@@ -1,28 +1,46 @@
-[versions]
-agp = "8.12.3"
-kotlin = "2.3.21"
 
+[versions]
+# Build tools
+agp = "9.2.1"
+kotlin = "2.3.21"
+ksp = "2.3.9"
+
+# AndroidX
 coreKtx = "1.17.0"
+lifecycleRuntimeKtx = "2.9.3"
+activityCompose = "1.10.1"
+activityKtx = "1.10.1"
+appcompat = "1.7.1"
+
+# Compose
+composeBom = "2025.08.00"
+
+# Navigation
+navigationComposeVersion = "2.9.3"
+
+# Kotlin
+kotlinxSerializationJson = "1.9.0"
+
+# Firebase
+firebaseBom = "34.18.0"
+googleServices = "4.5.0"
+
+# Material
+material = "1.13.0"
+
+# ConstraintLayout
+constraintVersion = "1.1.1"
+constraintlayoutVersion = "2.2.1"
+
+# Hilt
+hilt = "2.60.1"
+hiltNavigationCompose = "1.4.0"
+
+# Testing
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 
-kotlinxSerializationJson = "1.9.0"
-lifecycleRuntimeKtx = "2.9.3"
-activityCompose = "1.10.1"
-activityKtx = "1.10.1"
-
-composeBom = "2025.08.00"
-
-firebaseBom = "34.18.0"
-googleServices = "4.5.0"
-
-appcompat = "1.7.1"
-material = "1.13.0"
-
-constraintVersion = "1.1.1"
-constraintlayoutVersion = "2.2.1"
-navigationComposeVersion = "2.9.3"
 
 
 [libraries]
@@ -59,6 +77,11 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 
+hiltAndroid = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hiltCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -68,3 +91,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 firebase-google-services = {id = "com.google.gms.google-services", version.ref = "googleServices" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

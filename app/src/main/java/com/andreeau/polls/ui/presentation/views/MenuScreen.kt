@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.andreeau.polls.ui.theme.PollsAppTheme
 import com.amethyst.polls.R
 import com.andreeau.pollscomponents.components.buttons.LargeButton
+import com.andreeau.pollscomponents.components.miscelanous.PollHeader
 
 @Composable
 @Preview
@@ -36,14 +37,8 @@ fun MenuScreen(onCreatePoll: () -> Unit = {}, onVotePoll: (String) -> Unit = {})
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.Top
             ) {
-                Image(
-                    painter = painterResource(R.drawable.banner),
-                    contentDescription = stringResource(R.string.banner_voiceover),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 50.dp),
-                    contentScale = ContentScale.FillWidth
-                )
+                PollHeader(imageResource = R.drawable.banner, "", "")
+
                 LargeButton(text = stringResource(R.string.create_poll)) { onCreatePoll() }
                 LargeButton(text = stringResource(R.string.vote_poll)) { showPollCodeDialog = true }
 

@@ -6,8 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.andreeau.polls.ui.presentation.navigation.PollsNavigation
 import com.andreeau.polls.ui.theme.PollsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LaunchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

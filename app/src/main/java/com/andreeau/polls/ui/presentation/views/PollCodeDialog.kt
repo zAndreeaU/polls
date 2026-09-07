@@ -1,5 +1,7 @@
 package com.andreeau.polls.ui.presentation.views
 
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.res.stringResource
@@ -31,7 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amethyst.polls.R
+import com.andreeau.polls.ui.presentation.views.viewModels.PollCodeDdialogViewModel
 import com.andreeau.pollscomponents.components.buttons.SmallButton
 import com.andreeau.pollscomponents.components.textFields.CenteredTextField
 import com.andreeau.pollscomponents.components.textLabels.MediumLabel
@@ -41,19 +47,23 @@ import com.andreeau.pollscomponents.components.textLabels.MediumLabel
 @Preview
 fun PollCodeDialog(
     onCodeEntered: (String) -> Unit = {},
-    onDismiss: () -> Unit = {}
+    onDismiss: () -> Unit = {},
+    viewModel: PollCodeDdialogViewModel = hiltViewModel()
 ) {
-    var pollCode by remember {
-        mutableStateOf("")
-    }
-
+    val pollCodeViewState by viewModel.pollCodeState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val invalidPollCodeMessage = stringResource(R.string.poll_code_error_message)
     Dialog(
         onDismissRequest = {
             onDismiss()
         }
     ) {
-        Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.background)) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.background)
+        ) {
             IconButton(
                 onClick = { onDismiss() },
                 modifier = Modifier.align(Alignment.TopEnd)
@@ -75,15 +85,24 @@ fun PollCodeDialog(
                 MediumLabel(labelText = stringResource(R.string.enter_poll_code))
                 Spacer(modifier = Modifier.height(16.dp))
                 CenteredTextField(
-                    value = pollCode,
-                    onValueChange = { pollCode = it },
+                    value = pollCodeViewState.pollCode,
+                    onValueChange = { viewModel.onPollCodeChanged(it.take(6))},
                     label = stringResource(R.string.poll_code)
                 )
 
                 SmallButton(
                     onClick = {
-                        onDismiss()
-                        onCodeEntered(pollCode)
+                        if(pollCodeViewState.canProceed){
+                            onDismiss()
+                            onCodeEntered(pollCodeViewState.pollCode)
+                        }else{
+                            Toast.makeText(
+                                context,
+                                invalidPollCodeMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
 
                     },
                     text = stringResource(R.string.next)

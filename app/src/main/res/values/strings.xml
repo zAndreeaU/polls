@@ -10,6 +10,11 @@
     <string name="poll_code">Code</string>
     <string name="dismiss_dialog">Dismiss</string>
     <string name="next">Next</string>
+    <string name="poll_code_error_message">Please enter a valid code</string>
+
+    //PollVoteScreen
+    <string name="vote_poll_header_text">Vote</string>
+
 
 
 
