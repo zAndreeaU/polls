@@ -1,10 +1,12 @@
 package com.andreeau.pollcore.repositories.impl
 
 import com.andreeau.pollcore.api.Constants
+import com.andreeau.pollcore.entities.AnswerOption
 import com.andreeau.pollcore.entities.Poll
 import com.andreeau.pollcore.repositories.PollRepository
 import com.andreeau.pollcore.repositories.callBacks.MainPollCallback
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ServerValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,7 +42,14 @@ class PollRepositoryImpl @Inject constructor(
                     return@launch
                 }
 
-                val poll = snapshot.getValue(Poll::class.java)
+                val _poll = snapshot.getValue(Poll::class.java)
+
+                val answers = snapshot.children
+                    .filter { it.key != Constants.QUESTION && it.key != Constants.COUNT }
+                    .mapNotNull { it.getValue(AnswerOption::class.java) }
+
+                val poll = _poll?.copy(
+                    answers = answers)
 
                 withContext(Dispatchers.Main) {
                     if (poll != null) {
@@ -68,8 +77,34 @@ class PollRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun vote(pollId: String, optionId: Int) {
-        TODO("Not yet implemented")
+    override fun vote(
+        pollId: String,
+        optionId: Int,
+        response: MainPollCallback<Unit>
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val pollRef = database
+                    .child(Constants.POLLS)
+                    .child(pollId)
+
+                val updates = mapOf(
+                    Constants.COUNT to ServerValue.increment(1),
+                    "$optionId/${Constants.COUNT}" to ServerValue.increment(1)
+                )
+
+                pollRef.updateChildren(updates).await()
+
+                withContext(Dispatchers.Main) {
+                    response.onSuccess(Unit)
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    response.onError()
+                }
+            }
+        }
     }
 
 }

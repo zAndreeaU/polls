@@ -26,6 +26,7 @@ fun PollsNavigation() {
         // Splash
         // ---------------------------------------------------------
 
+
         composable(PollRoute.Splash.route) {
 
             SplashScreen(
@@ -130,7 +131,7 @@ fun PollsNavigation() {
                     navController.navigate(
                         PollRoute.VoteResults.route
                     ) {
-                        popUpTo(PollRoute.VotePoll.route) {
+                        popUpTo(backStackEntry.destination.id) {
                             inclusive = true
                         }
                     }
@@ -143,17 +144,12 @@ fun PollsNavigation() {
         // ---------------------------------------------------------
 
         composable(PollRoute.VoteResults.route) {
-
             ResultsScreen(
                 onBackToMenu = {
-
-                    navController.navigate(
-                        PollRoute.Menu.route
-                    ) {
-                        popUpTo(PollRoute.VoteResults.route) {
-                            inclusive = true
-                        }
-                    }
+                    navController.popBackStack(
+                        PollRoute.Menu.route,
+                        inclusive = false
+                    )
                 }
             )
         }
