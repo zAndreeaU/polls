@@ -15,7 +15,7 @@ import com.andreeau.pollscomponents.components.miscelanous.PollHeader
 
 @Composable
 @Preview
-fun VotePollScreen(pollCode: String = "AB12CD", onVoteCompleted: () -> Unit = {}) {
+fun VotePollScreen(pollCode: String = "9p8vgi", onVoteCompleted: () -> Unit = {}) {
     PollsAppTheme() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             innerPadding
@@ -27,7 +27,7 @@ fun VotePollScreen(pollCode: String = "AB12CD", onVoteCompleted: () -> Unit = {}
             ) {
                 PollHeader(
                     imageResource = R.drawable.banner_blank,
-                    title = stringResource(R.string.create_poll),
+                    title = stringResource(R.string.vote_poll),
                     subtitle = pollCode
                 )
 

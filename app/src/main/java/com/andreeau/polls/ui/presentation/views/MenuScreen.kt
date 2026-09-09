@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.andreeau.polls.ui.theme.PollsAppTheme
 import com.amethyst.polls.R
+import com.andreeau.pollcore.entities.Poll
 import com.andreeau.pollscomponents.components.buttons.LargeButton
 import com.andreeau.pollscomponents.components.miscelanous.PollHeader
 
@@ -44,7 +45,7 @@ fun MenuScreen(onCreatePoll: () -> Unit = {}, onVotePoll: (String) -> Unit = {})
 
                 if (showPollCodeDialog) {
                     PollCodeDialog(
-                        onCodeEntered = { code ->
+                        onCodeEntered = { code->
 
                             showPollCodeDialog = false
 

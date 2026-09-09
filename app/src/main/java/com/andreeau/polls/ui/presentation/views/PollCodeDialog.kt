@@ -37,6 +37,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amethyst.polls.R
+import com.andreeau.pollcore.entities.Poll
 import com.andreeau.polls.ui.presentation.views.viewModels.PollCodeDdialogViewModel
 import com.andreeau.pollscomponents.components.buttons.SmallButton
 import com.andreeau.pollscomponents.components.textFields.CenteredTextField

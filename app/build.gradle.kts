@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
@@ -48,6 +49,7 @@ kotlin {
     }
 }
 dependencies {
+    implementation(project(":pollcore"))
     implementation(files("libs/pollcomponents0-0-2.aar"))
 
     implementation(libs.androidx.activity.ktx)
@@ -79,6 +81,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
 
 
     // --- TEST DEPENDENCIES (FIXED) ---

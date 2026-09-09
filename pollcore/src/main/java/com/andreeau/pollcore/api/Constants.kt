@@ -1,6 +1,6 @@
 package com.andreeau.pollcore.api
 
-class Constants {
+object Constants {
     val POLLS : String ="Polls"
     val COUNT : String = "count"
     val NAME : String = "name"
