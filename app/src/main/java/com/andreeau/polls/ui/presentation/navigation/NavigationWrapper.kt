@@ -11,7 +11,6 @@ import com.andreeau.polls.ui.presentation.views.MenuScreen
 import com.andreeau.polls.ui.presentation.views.ResultsScreen
 import com.andreeau.polls.ui.presentation.views.SplashScreen
 import com.andreeau.polls.ui.presentation.views.VotePollScreen
-
 @Composable
 fun PollsNavigation() {
 
@@ -26,12 +25,10 @@ fun PollsNavigation() {
         // Splash
         // ---------------------------------------------------------
 
-
         composable(PollRoute.Splash.route) {
 
             SplashScreen(
                 onSplashFinished = {
-
                     navController.navigate(
                         PollRoute.Menu.route
                     ) {
@@ -50,16 +47,13 @@ fun PollsNavigation() {
         composable(PollRoute.Menu.route) {
 
             MenuScreen(
-
                 onCreatePoll = {
-
                     navController.navigate(
                         PollRoute.CreatePoll.route
                     )
                 },
 
                 onVotePoll = { pollCode ->
-
                     navController.navigate(
                         "${PollRoute.VotePoll.route}/$pollCode"
                     )
@@ -75,31 +69,10 @@ fun PollsNavigation() {
 
             CreatePollScreen(
                 onPollCreated = {
-
                     navController.navigate(
                         PollRoute.CreateResults.route
                     ) {
                         popUpTo(PollRoute.CreatePoll.route) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-
-        // ---------------------------------------------------------
-        // Results after creating poll
-        // ---------------------------------------------------------
-
-        composable(PollRoute.CreateResults.route) {
-
-            ResultsScreen(
-                onBackToMenu = {
-
-                    navController.navigate(
-                        PollRoute.Menu.route
-                    ) {
-                        popUpTo(PollRoute.Menu.route) {
                             inclusive = true
                         }
                     }
@@ -127,9 +100,8 @@ fun PollsNavigation() {
                 pollCode = pollCode,
 
                 onVoteCompleted = {
-
                     navController.navigate(
-                        PollRoute.VoteResults.route
+                        "${PollRoute.VoteResults.route.removeSuffix("/{pollCode}")}/$pollCode"
                     ) {
                         popUpTo(backStackEntry.destination.id) {
                             inclusive = true
@@ -143,8 +115,20 @@ fun PollsNavigation() {
         // Results after voting
         // ---------------------------------------------------------
 
-        composable(PollRoute.VoteResults.route) {
+        composable(
+            route = PollRoute.VoteResults.route,
+            arguments = listOf(
+                navArgument("pollCode") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+
+            val pollCode =
+                backStackEntry.arguments?.getString("pollCode") ?: ""
+
             ResultsScreen(
+                pollCode = pollCode,
                 onBackToMenu = {
                     navController.popBackStack(
                         PollRoute.Menu.route,

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,7 +33,9 @@ fun VotePollScreen(
 ) {
     PollsAppTheme() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            viewModel.retrieveData(pollCode)
+            LaunchedEffect(pollCode) {
+                viewModel.retrieveData(pollCode)
+            }
             val votePollViewState by viewModel.votePollState.collectAsStateWithLifecycle()
 
             Column(
@@ -58,10 +61,11 @@ fun VotePollScreen(
                         }, text = answerOption.name)
 
                     }
-                    if (votePollViewState.canProceed) {
-                        onVoteCompleted()
+                    LaunchedEffect(votePollViewState.canProceed) {
+                        if (votePollViewState.canProceed) {
+                            onVoteCompleted()
+                        }
                     }
-
                 }
             }
         }
