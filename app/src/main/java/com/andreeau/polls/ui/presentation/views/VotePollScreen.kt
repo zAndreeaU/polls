@@ -52,6 +52,7 @@ fun VotePollScreen(
                         title = stringResource(R.string.vote_poll),
                         subtitle = pollCode
                     )
+                    Spacer(Modifier.height(50.dp))
                     MediumLabel(votePollViewState.poll.question)
                     Spacer(Modifier.height(50.dp))
 

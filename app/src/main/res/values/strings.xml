@@ -20,6 +20,16 @@
     <string name="go_back">Menu </string>
     <string name="close_app">Close </string>
 
+    //CreatePollScreen
+
+    <string name="create_poll_header">Create poll</string>
+    <string name="add_answer_btn_text">Add</string>
+    <string name="finish_btn_text">Finish</string>
+    <string name="Type_question_label">Type your question</string>
+    <string name="Type_answer_label">Type answer</string>
+
+
+
 
 
 

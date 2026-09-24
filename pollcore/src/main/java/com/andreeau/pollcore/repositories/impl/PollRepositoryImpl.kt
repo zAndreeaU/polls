@@ -22,14 +22,13 @@ class PollRepositoryImpl @Inject constructor(
 ) : PollRepository {
 
 
-    override fun createPoll(poll: Poll) {
+    override fun createPoll(poll: Poll, callback: MainPollCallback<Unit>) {
         TODO("Not yet implemented")
+
+
     }
 
-    override fun getPoll(
-        id: String,
-        response: MainPollCallback<Poll>
-    ) {
+    override fun getPoll(id: String, response: MainPollCallback<Poll>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val snapshot = database
@@ -45,38 +44,41 @@ class PollRepositoryImpl @Inject constructor(
                     return@launch
                 }
 
-                val _poll = snapshot.getValue(Poll::class.java)
-
                 val answers = snapshot.children
-                    .filter { it.key != Constants.QUESTION && it.key != Constants.COUNT }
-                    .mapNotNull { it.getValue(AnswerOption::class.java) }
+                    .filter {
+                        it.key != Constants.QUESTION &&
+                                it.key != Constants.COUNT &&
+                                it.key != Constants.STATUS
+                    }
+                    .mapNotNull {
+                        it.getValue(AnswerOption::class.java)
+                    }
 
-                val poll = _poll?.copy(
-                    answers = answers)
+                val poll = Poll(
+                    status = snapshot.child(Constants.STATUS)
+                        .getValue(String::class.java) ?: "",
+
+                    question = snapshot.child(Constants.QUESTION)
+                        .getValue(String::class.java) ?: "",
+
+                    count = snapshot.child(Constants.COUNT)
+                        .getValue(Int::class.java) ?: 0,
+
+                    answers = answers
+                )
 
                 withContext(Dispatchers.Main) {
-                    if (poll != null) {
-                        response.onSuccess(poll)
-                    } else {
-                        response.onError()
-                    }
+                    response.onSuccess(poll)
                 }
 
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    println("--------------------------------------------------- ")
-                    e.printStackTrace()
                     response.onError()
                 }
             }
         }
     }
-
-    override fun getPollStatus(id: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getPollResults(id: String, callback: MainPollCallback<Poll>){
+    override fun getPollResults(id: String, callback: MainPollCallback<Poll>) {
         database
             .child(Constants.POLLS)
             .child(id)
@@ -94,7 +96,6 @@ class PollRepositoryImpl @Inject constructor(
 
                     for (answerSnapshot in snapshot.children) {
 
-                        // Ignore "question" and "count"
                         if (answerSnapshot.key == Constants.QUESTION ||
                             answerSnapshot.key == Constants.COUNT
                         ) {
@@ -132,11 +133,7 @@ class PollRepositoryImpl @Inject constructor(
             })
     }
 
-    override fun vote(
-        pollId: String,
-        optionId: Int,
-        response: MainPollCallback<Unit>
-    ) {
+    override fun vote(pollId: String, optionId: Int, response: MainPollCallback<Unit>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val pollRef = database

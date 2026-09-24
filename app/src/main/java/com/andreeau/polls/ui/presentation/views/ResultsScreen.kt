@@ -62,7 +62,7 @@ fun ResultsScreen(
                             R.string.total_votes_label, resultsState.poll.count
                         )
                     )
-
+                    Spacer(Modifier.height(50.dp))
                     MediumLabel(resultsState.poll.question)
                     Spacer(Modifier.height(50.dp))
                     Column (Modifier.padding(start = 16.dp, end = 16.dp)) {

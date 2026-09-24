@@ -3,8 +3,10 @@ package com.andreeau.polls.ui.presentation.views
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -39,6 +41,7 @@ fun MenuScreen(onCreatePoll: () -> Unit = {}, onVotePoll: (String) -> Unit = {})
                 verticalArrangement = Arrangement.Top
             ) {
                 PollHeader(imageResource = R.drawable.banner, "", "")
+                Spacer(Modifier.height(50.dp))
 
                 LargeButton(text = stringResource(R.string.create_poll)) { onCreatePoll() }
                 LargeButton(text = stringResource(R.string.vote_poll)) { showPollCodeDialog = true }
