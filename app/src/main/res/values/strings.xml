@@ -27,6 +27,9 @@
     <string name="finish_btn_text">Finish</string>
     <string name="Type_question_label">Type your question</string>
     <string name="Type_answer_label">Type answer</string>
+    <string name="poll_data_error">Please enter valid data</string>
+    <string name="poll_creation_error">Something went wrong.</string>
+
 
 
 

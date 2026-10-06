@@ -7,10 +7,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andreeau.polls.ui.presentation.views.CreatePollScreen
+import com.andreeau.polls.ui.presentation.views.CreateResultsScreen
 import com.andreeau.polls.ui.presentation.views.MenuScreen
 import com.andreeau.polls.ui.presentation.views.ResultsScreen
 import com.andreeau.polls.ui.presentation.views.SplashScreen
 import com.andreeau.polls.ui.presentation.views.VotePollScreen
+
 @Composable
 fun PollsNavigation() {
 
@@ -68,14 +70,42 @@ fun PollsNavigation() {
         composable(PollRoute.CreatePoll.route) {
 
             CreatePollScreen(
-                onPollCreated = {
+                onPollCreated = { pollCode ->
                     navController.navigate(
-                        PollRoute.CreateResults.route
+                        "create_results/$pollCode"
                     ) {
                         popUpTo(PollRoute.CreatePoll.route) {
                             inclusive = true
                         }
                     }
+                }
+            )
+        }
+
+        // ---------------------------------------------------------
+        // Create Poll Results
+        // ---------------------------------------------------------
+
+
+        composable(
+            route = PollRoute.CreateResults.route,
+            arguments = listOf(
+                navArgument("pollCode") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+
+            val pollCode =
+                backStackEntry.arguments?.getString("pollCode") ?: ""
+
+            CreateResultsScreen(
+                pollCode = pollCode,
+                onBackToMenu = {
+                    navController.popBackStack(
+                        PollRoute.Menu.route,
+                        inclusive = false
+                    )
                 }
             )
         }

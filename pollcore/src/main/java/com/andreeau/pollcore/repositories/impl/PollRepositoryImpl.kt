@@ -22,10 +22,35 @@ class PollRepositoryImpl @Inject constructor(
 ) : PollRepository {
 
 
-    override fun createPoll(poll: Poll, callback: MainPollCallback<Unit>) {
-        TODO("Not yet implemented")
+    override fun createPoll(poll: Poll, pollId: String, callback: MainPollCallback<Unit>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val pollReference = database
+                    .child(Constants.POLLS)
+                    .child(pollId)
 
+                val pollData = mutableMapOf<String, Any>(
+                    Constants.STATUS to poll.status,
+                    Constants.QUESTION to poll.question,
+                    Constants.COUNT to poll.count
+                )
 
+                poll.answers.forEachIndexed { index, answer ->
+                    pollData[(index + 1).toString()] = answer
+                }
+
+                pollReference.setValue(pollData).await()
+
+                withContext(Dispatchers.Main) {
+                    callback.onSuccess(Unit)
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    callback.onError()
+                }
+            }
+        }
     }
 
     override fun getPoll(id: String, response: MainPollCallback<Poll>) {

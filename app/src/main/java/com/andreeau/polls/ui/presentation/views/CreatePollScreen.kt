@@ -1,5 +1,6 @@
 package com.andreeau.polls.ui.presentation.views
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,9 +38,12 @@ import com.andreeau.pollscomponents.components.textFields.OutlinedTextField
 
 @Composable
 fun CreatePollScreen(
-    onPollCreated: () -> Unit = {},
+    onPollCreated: (pollId: String) -> Unit = {},
     viewModel: CreatePollScreenViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val pollDataErrorText = stringResource(R.string.poll_data_error)
+    val pollCreationError = stringResource(R.string.poll_creation_error)
     val state by viewModel.createPollState.collectAsStateWithLifecycle()
     val focusRequester = remember { FocusRequester() }
     PollsAppTheme {
@@ -52,20 +57,21 @@ fun CreatePollScreen(
                     .padding(innerPadding)
                     .imePadding()
             ) {
-
+                PollHeader(
+                    imageResource = R.drawable.banner_blank,
+                    title = stringResource(R.string.create_poll),
+                    subtitle = ""
+                )
                 // Scrollable content
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
 
-                    PollHeader(
-                        imageResource = R.drawable.banner_blank,
-                        title = stringResource(R.string.create_poll),
-                        subtitle = ""
-                    )
+
                     Spacer(Modifier.height(30.dp))
 
                     BasicTextField(
@@ -109,6 +115,32 @@ fun CreatePollScreen(
                         onClick = {
                             viewModel.createPoll()
                         })
+
+                    LaunchedEffect(state.pollCreated) {
+                        if(state.pollCreated){
+                            onPollCreated(state.pollId)
+                        }
+                    }
+                    LaunchedEffect(state.showError) {
+                        if(state.showError){
+                            Toast.makeText(
+                                context,
+                                pollDataErrorText,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    LaunchedEffect(state.pollCreationError) {
+                        if(state.pollCreationError){
+                            Toast.makeText(
+                                context,
+                                pollCreationError,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
                 }
             }
         }
