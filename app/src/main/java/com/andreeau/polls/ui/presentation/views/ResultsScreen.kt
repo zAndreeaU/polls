@@ -69,7 +69,7 @@ fun ResultsScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp, end = 16.dp)
+                            .padding(top = 8.dp, start = 16.dp)
                     ) {
                         SmallLabel(resultsState.poll.status)
                     }

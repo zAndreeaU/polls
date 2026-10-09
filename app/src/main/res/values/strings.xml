@@ -20,6 +20,7 @@
     <string name="go_back">Menu </string>
     <string name="close_app">Close </string>
     <string name="end_poll">End Poll </string>
+    <string name="poll_not_closed">Please close the poll before exiting.</string>
 
     //CreatePollScreen
 

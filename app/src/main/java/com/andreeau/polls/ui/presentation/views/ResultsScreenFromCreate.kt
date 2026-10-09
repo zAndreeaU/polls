@@ -1,5 +1,7 @@
 package com.andreeau.polls.ui.presentation.views
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,11 +16,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amethyst.polls.R
+import com.andreeau.pollcore.api.Constants
 import com.andreeau.polls.ui.presentation.views.viewModels.PollResultsFromCreateScreenViewModel
 import com.andreeau.polls.ui.theme.Blue
 import com.andreeau.polls.ui.theme.Brown
@@ -42,9 +46,26 @@ fun ResultsScreenFromCreate(
     viewModel: PollResultsFromCreateScreenViewModel = hiltViewModel()
 ) {
     val resultsState by viewModel.pollResultState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val pollNotClosedText = stringResource(R.string.poll_not_closed)
     LaunchedEffect(pollCode) {
         viewModel.observePollResults(pollCode)
     }
+
+
+    BackHandler(enabled = true) {
+        if (resultsState.poll.status == Constants.STATUS_OPEN) {
+            Toast.makeText(
+                context,
+                pollNotClosedText,
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            onBackToMenu()
+        }
+    }
+
+
 
     PollsAppTheme() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -72,14 +93,13 @@ fun ResultsScreenFromCreate(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 8.dp, end = 16.dp),
-                            horizontalArrangement = Arrangement.End
+                                .padding(top = 8.dp, start = 16.dp),
                         ) {
                             SmallLabel(resultsState.poll.status)
                         }
                         Spacer(Modifier.height(30.dp))
                         MediumLabel(resultsState.poll.question)
-                        Spacer(Modifier.height(30.dp))
+                        Spacer(Modifier.height(50.dp))
                         Column(Modifier.padding(horizontal = 16.dp)) {
                             resultsState.poll.answers.forEachIndexed { index, answer ->
                                 PollResultItem(
@@ -102,9 +122,16 @@ fun ResultsScreenFromCreate(
                         SmallButton(text = stringResource(R.string.end_poll), onClick = {
                             viewModel.closePoll(pollCode)
                         })
-
                         SmallButton(text = stringResource(R.string.go_back), onClick = {
-                            onBackToMenu()
+                            if (resultsState.poll.status == Constants.STATUS_OPEN) {
+                                Toast.makeText(
+                                    context,
+                                    pollNotClosedText,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                onBackToMenu()
+                            }
                         })
                     }
                 }
