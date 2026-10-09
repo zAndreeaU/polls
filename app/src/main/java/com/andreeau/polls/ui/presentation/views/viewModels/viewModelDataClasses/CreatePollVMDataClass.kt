@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.presentation.views.viewModels.ViewModelDataClasses
+package com.andreeau.polls.ui.presentation.views.viewModels.viewModelDataClasses
 
 data class CreatePollVMDataClass(
     val newPollCode : String="",

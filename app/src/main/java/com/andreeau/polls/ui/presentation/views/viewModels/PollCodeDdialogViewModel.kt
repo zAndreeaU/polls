@@ -1,11 +1,11 @@
 package com.andreeau.polls.ui.presentation.views.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.andreeau.pollcore.api.Constants
 import com.andreeau.pollcore.entities.Poll
-import com.andreeau.pollcore.repositories.PollRepository
 import com.andreeau.pollcore.repositories.callBacks.MainPollCallback
 import com.andreeau.pollcore.useCases.GetPollUseCase
-import com.andreeau.polls.ui.presentation.views.viewModels.ViewModelDataClasses.PollCodeVMDataclass
+import com.andreeau.polls.ui.presentation.views.viewModels.viewModelDataClasses.PollCodeVMDataclass
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +25,7 @@ class PollCodeDdialogViewModel @Inject constructor(
     fun onPollCodeChanged(code: String) {
         _pollCodeState.update {
             it.copy(
-                pollCode = code,
+                pollCode = code.lowercase(),
             )
         }
         val count = code.length
@@ -41,14 +41,20 @@ class PollCodeDdialogViewModel @Inject constructor(
             object : MainPollCallback<Poll> {
 
                 override fun onSuccess(poll: Poll) {
+                    if (poll.status == Constants.STATUS_CLOSED) {
+                        _pollCodeState.update {
+                            it.copy(poll = poll,isPollClosed = true,canProceedToVote = true)
+                        }
+                        return
+                    }
                     _pollCodeState.update {
-                        it.copy(poll = poll, canProceed = true)
+                        it.copy(poll = poll, canProceedToVote = true,isPollClosed = false)
                     }
                 }
 
                 override fun onError() {
                     _pollCodeState.update {
-                        it.copy(canProceed = false)
+                        it.copy(canProceedToVote = false)
                     }
                 }
 

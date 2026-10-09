@@ -1,8 +1,6 @@
 package com.andreeau.polls.ui.presentation.views
 
 import android.widget.Toast
-import android.widget.Toast.makeText
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,14 +16,10 @@ import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 
@@ -37,7 +31,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amethyst.polls.R
-import com.andreeau.pollcore.entities.Poll
 import com.andreeau.polls.ui.presentation.views.viewModels.PollCodeDdialogViewModel
 import com.andreeau.pollscomponents.components.buttons.SmallButton
 import com.andreeau.pollscomponents.components.textFields.CenteredTextField
@@ -48,6 +41,7 @@ import com.andreeau.pollscomponents.components.textLabels.MediumLabel
 @Preview
 fun PollCodeDialog(
     onCodeEntered: (String) -> Unit = {},
+    onPollClosed: (String) -> Unit = {},
     onDismiss: () -> Unit = {},
     viewModel: PollCodeDdialogViewModel = hiltViewModel()
 ) {
@@ -93,7 +87,10 @@ fun PollCodeDialog(
 
                 SmallButton(
                     onClick = {
-                        if(pollCodeViewState.canProceed){
+                        if(pollCodeViewState.isPollClosed){
+                            onDismiss()
+                            onPollClosed(pollCodeViewState.pollCode)
+                        }else if(pollCodeViewState.canProceedToVote){
                             onDismiss()
                             onCodeEntered(pollCodeViewState.pollCode)
                         }else{

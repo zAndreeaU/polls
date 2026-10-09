@@ -5,7 +5,7 @@ import com.andreeau.pollcore.entities.Poll
 import com.andreeau.pollcore.repositories.callBacks.MainPollCallback
 import com.andreeau.pollcore.useCases.GetPollUseCase
 import com.andreeau.pollcore.useCases.VoteUseCase
-import com.andreeau.polls.ui.presentation.views.viewModels.ViewModelDataClasses.VotePollVMDataClass
+import com.andreeau.polls.ui.presentation.views.viewModels.viewModelDataClasses.VotePollVMDataClass
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

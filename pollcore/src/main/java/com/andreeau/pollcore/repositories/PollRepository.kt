@@ -10,4 +10,6 @@ interface PollRepository {
     fun getPollResults(id: String, callback: MainPollCallback<Poll>)
     fun vote(pollId: String, optionId: Int, callback: MainPollCallback<Unit>)
 
+    fun closePoll(pollId: String, callback: MainPollCallback<Unit>)
+
 }

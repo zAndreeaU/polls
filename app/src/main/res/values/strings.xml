@@ -19,6 +19,7 @@
     <string name="total_votes_label">Total votes: %1$d</string>
     <string name="go_back">Menu </string>
     <string name="close_app">Close </string>
+    <string name="end_poll">End Poll </string>
 
     //CreatePollScreen
 

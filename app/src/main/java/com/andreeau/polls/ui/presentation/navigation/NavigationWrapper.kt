@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.andreeau.polls.ui.presentation.views.CreatePollScreen
-import com.andreeau.polls.ui.presentation.views.CreateResultsScreen
+import com.andreeau.polls.ui.presentation.views.ResultsScreenFromCreate
 import com.andreeau.polls.ui.presentation.views.MenuScreen
 import com.andreeau.polls.ui.presentation.views.ResultsScreen
 import com.andreeau.polls.ui.presentation.views.SplashScreen
@@ -54,6 +54,12 @@ fun PollsNavigation() {
                         PollRoute.CreatePoll.route
                     )
                 },
+                onPollClosed = {pollCode->
+                    navController.navigate(
+                        "${PollRoute.VoteResults.route.removeSuffix("/{pollCode}")}/$pollCode"
+                    ) {
+                    }
+                },
 
                 onVotePoll = { pollCode ->
                     navController.navigate(
@@ -99,7 +105,7 @@ fun PollsNavigation() {
             val pollCode =
                 backStackEntry.arguments?.getString("pollCode") ?: ""
 
-            CreateResultsScreen(
+            ResultsScreenFromCreate(
                 pollCode = pollCode,
                 onBackToMenu = {
                     navController.popBackStack(

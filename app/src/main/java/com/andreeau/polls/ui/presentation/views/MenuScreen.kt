@@ -28,7 +28,7 @@ import com.andreeau.pollscomponents.components.miscelanous.PollHeader
 
 @Composable
 @Preview
-fun MenuScreen(onCreatePoll: () -> Unit = {}, onVotePoll: (String) -> Unit = {}) {
+fun MenuScreen(onCreatePoll: () -> Unit = {}, onPollClosed: (String) -> Unit = {},onVotePoll: (String) -> Unit = {}) {
     PollsAppTheme() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             var showPollCodeDialog by remember {
@@ -53,6 +53,10 @@ fun MenuScreen(onCreatePoll: () -> Unit = {}, onVotePoll: (String) -> Unit = {})
                             showPollCodeDialog = false
 
                             onVotePoll(code)
+                        },
+                        onPollClosed = { code ->
+                            showPollCodeDialog = false
+                            onPollClosed(code)
                         },
 
                         onDismiss = {

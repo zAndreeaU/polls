@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.presentation.views.viewModels.ViewModelDataClasses
+package com.andreeau.polls.ui.presentation.views.viewModels.viewModelDataClasses
 
 import com.andreeau.pollcore.entities.Poll
 

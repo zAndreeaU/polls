@@ -117,12 +117,16 @@ class PollRepositoryImpl @Inject constructor(
                     val question =
                         snapshot.child(Constants.QUESTION).getValue(String::class.java) ?: ""
 
+                    val status =
+                        snapshot.child(Constants.STATUS).getValue(String::class.java) ?: ""
+
                     val answers = mutableListOf<AnswerOption>()
 
                     for (answerSnapshot in snapshot.children) {
 
                         if (answerSnapshot.key == Constants.QUESTION ||
                             answerSnapshot.key == Constants.COUNT
+                            || answerSnapshot.key == Constants.STATUS
                         ) {
                             continue
                         }
@@ -144,6 +148,7 @@ class PollRepositoryImpl @Inject constructor(
                     }
 
                     val poll = Poll(
+                        status=status,
                         question = question,
                         count = totalCount,
                         answers = answers
@@ -179,6 +184,27 @@ class PollRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     response.onError()
+                }
+            }
+        }
+    }
+
+    override fun closePoll(pollId: String, callback: MainPollCallback<Unit>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                database
+                    .child(Constants.POLLS)
+                    .child(pollId)
+                    .child(Constants.STATUS)
+                    .setValue(Constants.STATUS_CLOSED)
+                    .await()
+
+                withContext(Dispatchers.Main) {
+                    callback.onSuccess(Unit)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    callback.onError()
                 }
             }
         }

@@ -2,13 +2,16 @@ package com.andreeau.polls.ui.presentation.views
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,6 +35,7 @@ import com.andreeau.polls.ui.theme.SoftYellow
 import com.andreeau.pollscomponents.components.miscelanous.PollHeader
 import com.andreeau.pollscomponents.components.progress.PollResultItem
 import com.andreeau.pollscomponents.components.textLabels.MediumLabel
+import com.andreeau.pollscomponents.components.textLabels.SmallLabel
 
 
 @Composable
@@ -62,7 +66,14 @@ fun ResultsScreen(
                             R.string.total_votes_label, resultsState.poll.count
                         )
                     )
-                    Spacer(Modifier.height(50.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp, end = 16.dp)
+                    ) {
+                        SmallLabel(resultsState.poll.status)
+                    }
+                    Spacer(Modifier.height(20.dp))
                     MediumLabel(resultsState.poll.question)
                     Spacer(Modifier.height(50.dp))
                     Column (Modifier.padding(start = 16.dp, end = 16.dp)) {
@@ -83,7 +94,7 @@ fun ResultsScreen(
     }
 }
 
-fun getPollResultColor(index: Int): Color {
-    val PollResultColors = listOf(Lavender, SoftYellow, Coral, Blue, Green, Gray, Pink, Brown)
-    return PollResultColors[index % PollResultColors.size]
+private fun getPollResultColor(index: Int): Color {
+    val pollResultColors = listOf(Lavender, SoftYellow, Coral, Blue, Green, Gray, Pink, Brown)
+    return pollResultColors[index % pollResultColors.size]
 }
