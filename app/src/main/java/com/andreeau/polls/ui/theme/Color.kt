@@ -8,8 +8,8 @@ val DeepDarkPurple = Color(0xFF64459B)
 val Yellow = Color(0xFFF5C451)
 val DarkYellow = Color(0xFF8F6A18)
 val DarkPurple = Color(0xFF231232)
-val DarkerPurple = Color(0xFF16091F)
-val LightPurple = Color(0xFFF5EAFB)
+val DarkerPurple = Color(0xFF24133f)
+val LightPurple = Color(0xFFf0ecfa)
 val White  = Color(0xFFFFFFFF)
 
 //chart progress  colors

@@ -40,7 +40,7 @@ fun MenuScreen(onCreatePoll: () -> Unit = {}, onPollClosed: (String) -> Unit = {
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.Top
             ) {
-                PollHeader(imageResource = R.drawable.banner, "", "")
+                PollHeader(imageResource = R.drawable.banner_blank, title = stringResource(R.string.app_name), "")
                 Spacer(Modifier.height(50.dp))
 
                 LargeButton(text = stringResource(R.string.create_poll)) { onCreatePoll() }
