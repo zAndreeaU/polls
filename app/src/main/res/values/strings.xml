@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Polls</string>
 
+    //offlineScreen
+    <string name="offline_text">No internet connection</string>
+    <string name="quit_btn_text">Exit</string>
+
     //MenuScreen
     <string name="create_poll">Create poll</string>
     <string name="vote_poll">Vote</string>

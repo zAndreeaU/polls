@@ -50,6 +50,7 @@ kotlin {
 }
 dependencies {
     implementation(project(":pollcore"))
+    implementation(libs.androidx.room.ktx)
     implementation(files("libs/pollcomponents0-0-2.aar"))
 
     implementation(libs.androidx.activity.ktx)

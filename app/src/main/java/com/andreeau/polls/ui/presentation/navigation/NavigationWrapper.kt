@@ -1,6 +1,9 @@
 package com.andreeau.polls.ui.presentation.navigation
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +12,7 @@ import androidx.navigation.navArgument
 import com.andreeau.polls.ui.presentation.views.CreatePollScreen
 import com.andreeau.polls.ui.presentation.views.ResultsScreenFromCreate
 import com.andreeau.polls.ui.presentation.views.MenuScreen
+import com.andreeau.polls.ui.presentation.views.OfflineScreen
 import com.andreeau.polls.ui.presentation.views.ResultsScreen
 import com.andreeau.polls.ui.presentation.views.SplashScreen
 import com.andreeau.polls.ui.presentation.views.VotePollScreen
@@ -17,6 +21,7 @@ import com.andreeau.polls.ui.presentation.views.VotePollScreen
 fun PollsNavigation() {
 
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -30,14 +35,42 @@ fun PollsNavigation() {
         composable(PollRoute.Splash.route) {
 
             SplashScreen(
-                onSplashFinished = {
-                    navController.navigate(
-                        PollRoute.Menu.route
-                    ) {
-                        popUpTo(PollRoute.Splash.route) {
-                            inclusive = true
+                onSplashFinished = { isOnline ->
+
+                    if(isOnline){
+                        navController.navigate(
+                            PollRoute.Menu.route
+                        ) {
+                            popUpTo(PollRoute.Splash.route) {
+                                inclusive = true
+                            }
+                        }
+                    }else{
+                        navController.navigate(
+                            PollRoute.OfflineView.route
+                        ) {
+                            popUpTo(PollRoute.Splash.route) {
+                                inclusive = true
+                            }
                         }
                     }
+                }
+            )
+        }
+
+
+        // ---------------------------------------------------------
+        // Splash
+        // ---------------------------------------------------------
+
+        composable(PollRoute.OfflineView.route) {
+            BackHandler {
+                (context as? Activity)?.finish()
+            }
+
+            OfflineScreen(
+                onQuitApp = {
+                    (context as? Activity)?.finish()
                 }
             )
         }
