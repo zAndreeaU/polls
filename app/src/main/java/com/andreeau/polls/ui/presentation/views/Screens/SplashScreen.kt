@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.presentation.views
+package com.andreeau.polls.ui.presentation.views.Screens
 
 import androidx.compose.runtime.Composable
 import android.app.Activity
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -15,21 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amethyst.polls.R
-import com.andreeau.polls.ui.presentation.views.viewModels.SplashScreenViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onSplashFinished: (isOffline: Boolean) -> Unit,
-    viewModel: SplashScreenViewModel = hiltViewModel()
+    onSplashFinished: () -> Unit,
 ) {
     val context = LocalContext.current
-    val splashViewState by viewModel.splashScreenState.collectAsStateWithLifecycle()
-    viewModel.checkNetworkStatus(context)
-
     DisposableEffect(Unit) {
         val window = (context as Activity).window
 
@@ -53,7 +45,7 @@ fun SplashScreen(
 
     LaunchedEffect(Unit) {
         delay(3000)
-        onSplashFinished(splashViewState.isOnline)
+        onSplashFinished()
     }
 
     Box(

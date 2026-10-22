@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.presentation.views
+package com.andreeau.polls.ui.presentation.views.Screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +20,7 @@ import com.amethyst.polls.R
 import com.andreeau.polls.ui.presentation.views.viewModels.VotePollScreenViewModel
 import com.andreeau.polls.ui.theme.PollsAppTheme
 import com.andreeau.pollscomponents.components.buttons.RegularButton
-import com.andreeau.pollscomponents.components.buttons.SmallButton
 import com.andreeau.pollscomponents.components.miscelanous.PollHeader
-import com.andreeau.pollscomponents.components.textLabels.LargeLabel
 import com.andreeau.pollscomponents.components.textLabels.MediumLabel
 
 @Composable

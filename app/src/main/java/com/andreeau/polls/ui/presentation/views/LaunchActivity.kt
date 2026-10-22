@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.andreeau.pollcore.utils.NetworkMonitor
 import com.andreeau.polls.ui.presentation.navigation.PollsNavigation
 import com.andreeau.polls.ui.theme.PollsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +17,7 @@ class LaunchActivity : ComponentActivity() {
         setContent {
             PollsAppTheme() {
 
-                PollsNavigation()
+                PollsNavigation(  networkMonitor = NetworkMonitor(applicationContext))
 
             }
         }

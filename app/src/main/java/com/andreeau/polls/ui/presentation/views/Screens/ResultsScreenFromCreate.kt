@@ -1,4 +1,4 @@
-package com.andreeau.polls.ui.presentation.views
+package com.andreeau.polls.ui.presentation.views.Screens
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
