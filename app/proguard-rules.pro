@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Keep source file names and line numbers for accurate stack traces
+-keepattributes SourceFile,LineNumberTable
+
+# Optional: Keep custom exceptions if you throw them frequently
+-keep public class * extends java.lang.Exception
+
+-keep class com.andreeau.pollcore.entities.** { *; }
+
+-dontwarn com.google.firebase.**
+-dontwarn com.google.android.gms.**
+
+
