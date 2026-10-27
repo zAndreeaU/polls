@@ -101,13 +101,14 @@ fun CreatePollScreen(
                         .padding(bottom = 16.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    SmallButton(
+                    SmallButton(modifier = Modifier.weight(1f),
                         text = stringResource(R.string.add_answer_btn_text),
                         onClick = {
                             viewModel.addAnswer()
                         })
 
                     SmallButton(
+                        modifier = Modifier.weight(1f),
                         text = stringResource(R.string.finish_btn_text),
                         onClick = {
                             viewModel.createPoll()
